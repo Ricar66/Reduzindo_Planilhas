@@ -1,0 +1,2 @@
+{% from 'macros.html' import select_filiais %}
+{{ select_filiais('filial', filial_atual or request.args.get('filial','')) }}

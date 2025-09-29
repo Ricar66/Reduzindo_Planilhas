@@ -1,0 +1,26 @@
+{% extends 'base.html' %}{% set titulo='Impressoras' %}{% block conteudo %}
+<h1 class="mb-3">Impressoras</h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+<div class="d-flex gap-2">
+  <a class="btn btn-outline-success btn-sm" href="{{ url_for('impressoras.importar_form') }}">Importar Excel/CSV</a>
+  <a class="btn btn-primary btn-sm" href="{{ url_for('impressoras.exportar') }}">Exportar Excel/CSV</a>
+</div>
+   <a class="btn btn-success btn-sm" href="{{ url_for('impressoras.novo') }}">Novo</a>
+  
+</div>
+
+<form class="row g-2 mb-3" method="get">
+  <div class="col-md-6"><input class="form-control form-control-sm" name="q" value="{{ termo }}" placeholder="Buscar por impressora, modelo ou IP"></div>
+  <div class="col-md-3">{% include 'includes/filtro_filial.html' %}</div>
+  <div class="col-md-3 d-grid"><button class="btn btn-outline-secondary btn-sm">Filtrar</button></div>
+</form>
+<div class="card"><div class="table-responsive">
+<table class="table table-sm align-middle table-striped mb-0">
+  <thead class="table-light"><tr><th>Filial</th><th>IP</th><th>Impressora</th><th>Modelo</th><th>Serial</th><th>Usuário</th><th>Senha</th><th class="text-end">Ações</th></tr></thead>
+  <tbody>{% for r in registros %}
+    <tr><td>{{ r.filial }}</td><td>{{ r.porta_ip }}</td><td>{{ r.impressora }}</td><td>{{ r.modelo }}</td><td>{{ r.serial }}</td><td>{{ r.login }}</td><td>{{ r.senha }}</td>
+    <td class="text-end"><a class="btn btn-sm btn-outline-primary" href="{{ url_for('impressoras.editar', id=r.id) }}">Editar</a>
+    <form method="post" action="{{ url_for('impressoras.excluir', id=r.id) }}" class="d-inline" onsubmit="return confirm('Excluir?')"><button class="btn btn-sm btn-outline-danger">Excluir</button></form></td></tr>
+  {% endfor %}</tbody>
+</table></div></div>
+{% endblock %}

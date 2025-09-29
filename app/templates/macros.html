@@ -1,0 +1,21 @@
+{% macro select_filiais(name, atual) -%}
+<select name="{{ name }}" class="form-select form-select-sm">
+  <option value="">Todas as Filiais</option>
+  {% set opts = ['01-Rio Preto','02-Catanduva','03-Jales','04-Votuporanga','05-Tupa','06-Marilia','07-Ituverava','08-Guaira','09-Barretos','10-Araraquara','11-Monte Alto','12-Bebedouro','13-Orlandia','14-Franca','15-Itapolis','16-Ribeirao Preto'] %}
+  {% for f in opts %}
+    <option value="{{ f }}" {{ 'selected' if (atual or '')==f else '' }}>{{ f }}</option>
+  {% endfor %}
+</select>
+{%- endmacro %}
+
+
+{% macro select_licencas(name, valor_selecionado, lista_de_licencas) %}
+    <select class="form-control" id="{{ name }}" name="{{ name }}">
+        <option value="">Selecione um tipo de licença...</option>
+        {% for lic in lista_de_licencas %}
+            <option value="{{ lic }}" {% if valor_selecionado == lic %}selected{% endif %}>
+                {{ lic }}
+            </option>
+        {% endfor %}
+    </select>
+{% endmacro %}

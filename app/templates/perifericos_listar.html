@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% set titulo = 'Estoque de Periféricos' %}
+
+{% block conteudo %}
+<h1 class="mb-3">Controle de Periféricos</h1>
+
+<ul class="nav nav-tabs mb-3">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="{{ url_for('perifericos.listar_estoque') }}">Estoque</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('perifericos.listar_entregas') }}">Entregas</a>
+  </li>
+</ul>
+
+<div class="d-flex justify-content-end align-items-center mb-3">
+  <a class="btn btn-success btn-sm" href="{{ url_for('perifericos.novo_item_estoque') }}">Novo Item no Estoque</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th class="text-center">Qtd. em Estoque</th>
+                <th>Status</th>
+                <th>Cód. TOTVS</th>
+                <th>Onde Comprar</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in registros %}
+            <tr>
+                <td><strong>{{ r.produto }}</strong></td>
+                <td class="text-center">{{ r.qtd_estoque }}</td>
+                <td>
+                    {% set qtd = r.qtd_estoque | int %}
+                    {% if qtd == 0 %}
+                        <span class="badge bg-danger">Sem Estoque</span>
+                    {% elif qtd <= 5 %}
+                        <span class="badge bg-warning text-dark">Estoque Baixo</span>
+                    {% else %}
+                        <span class="badge bg-success">Em Estoque</span>
+                    {% endif %}
+                </td>
+                <td>{{ r.cod_totvs }}</td>
+                <td>{{ r.onde_comprar }}</td>
+                <td>
+                    <a href="{{ url_for('perifericos.editar_item_estoque', id=r.id) }}" class="btn btn-sm btn-outline-primary">Editar</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" class="text-center">Nenhum item de estoque encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% set filiais = [
+'Rio Preto','Catanduva','Jales','Votuporanga','Tupã','Marilia','IItuverava','Guairá',
+'Barretos','Araraquara','Monte Alto','Bebedouro','Orlândia','Franca','Itápolis','Ribeirao'
+] %}
+<label class="form-label">Filial</label>
+<select name="filial" class="form-select form-select-sm">
+  <option value="">—</option>
+  {% set atual = (valor or '') %}
+  {% for f in filiais %}<option value="{{ f }}" {{ 'selected' if atual==f else '' }}>{{ f }}</option>{% endfor %}
+</select>

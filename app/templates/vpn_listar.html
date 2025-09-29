@@ -1,0 +1,32 @@
+{% extends 'base.html' %}{% block conteudo %}
+<h1 class="mb-3">Liberação de VPN</h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+<div class="d-flex gap-2">
+  <a class="btn btn-outline-success btn-sm" href="{{ url_for('vpn.importar_form') }}">Importar Excel/CSV</a>
+  <a class="btn btn-primary btn-sm" href="{{ url_for('vpn.exportar') }}">Exportar Excel/CSV</a>
+</div>
+   <a class="btn btn-success btn-sm" href="{{ url_for('vpn.novo') }}">Novo</a>
+  
+</div>
+<form class="row g-2 mb-3" method="get">
+  <div class="col-md-5"><input class="form-control form-control-sm" name="q" value="{{ termo }}" placeholder="Buscar por nome ou e-mail"></div>
+  <div class="col-md-3">{% include 'includes/filtro_filial.html' %}</div>
+  <div class="col-md-2">
+    <select name="status" class="form-select form-select-sm">
+      {% set st = status_atual or '' %}
+      <option value="">Todos</option><option {{ 'selected' if st=='PENDENTE' else '' }}>PENDENTE</option><option {{ 'selected' if st=='OK' else '' }}>OK</option>
+    </select>
+  </div>
+  <div class="col-md-2 d-grid"><button class="btn btn-outline-secondary btn-sm">Filtrar</button></div>
+</form>
+<div class="card"><div class="table-responsive">
+<table class="table table-sm align-middle table-striped mb-0">
+  <thead class="table-light"><tr><th>Nome</th><th>Filial</th><th>Data Solicitação</th><th>Data Retirada</th><th>Status</th><th>GLPI</th><th class="text-end">Ações</th></tr></thead>
+  <tbody>{% for r in registros %}
+    <tr><td>{{ r.nome }}</td><td>{{ r.filial }}</td><td>{{ r.data_solicitacao }}</td><td>{{ r.data_retirada }}</td><td>{{ r.status }}</td><td>{{ r.glpi_chamado }}</td>
+    <td class="text-end"><a class="btn btn-sm btn-outline-primary" href="{{ url_for('vpn.editar', id=r.id) }}">Editar</a>
+      <form method="post" action="{{ url_for('vpn.excluir', id=r.id) }}" class="d-inline" onsubmit="return confirm('Excluir registro?')">
+        <button class="btn btn-sm btn-outline-danger">Excluir</button></form></td></tr>
+  {% endfor %}</tbody>
+</table></div></div>
+{% endblock %}

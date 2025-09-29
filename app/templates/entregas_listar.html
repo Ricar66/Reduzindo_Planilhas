@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% set titulo = 'Entregas de Periféricos' %}
+
+{% block conteudo %}
+<h1 class="mb-3">Controle de Periféricos</h1>
+
+<ul class="nav nav-tabs mb-3">
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('perifericos.listar_estoque') }}">Estoque</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="{{ url_for('perifericos.listar_entregas') }}">Entregas</a>
+  </li>
+</ul>
+
+<div class="d-flex justify-content-end align-items-center mb-3">
+  <a class="btn btn-success btn-sm" href="{{ url_for('perifericos.nova_entrega') }}">Registrar Nova Entrega</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>GLPI</th>
+                <th>Solicitante</th>
+                <th>Produto Entregue</th>
+                <th class="text-center">Qtd</th>
+                <th>Observação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in registros %}
+            <tr>
+                <td>{{ r.glpi }}</td>
+                <td>{{ r.solicitante }}</td>
+                <td><strong>{{ r.produto_nome }}</strong></td>
+                <td class="text-center">{{ r.qtd }}</td>
+                <td>{{ r.observacao }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" class="text-center">Nenhuma entrega registrada.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

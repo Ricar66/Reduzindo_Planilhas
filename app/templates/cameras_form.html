@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% set is_edit = dados.id %}
+{% set form_title = 'Editar Câmera' if is_edit else 'Nova Câmera' %}
+{% set titulo=form_title %}
+
+{% block conteudo %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">{{ form_title }}</h6>
+    </div>
+    <div class="card-body">
+        <form method="post" action="{{ url_for('cameras.atualizar', id=dados.id) if is_edit else url_for('cameras.criar') }}">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Filial</label>
+                    {% from 'macros.html' import select_filiais %}
+                    {{ select_filiais('filial', dados.get('filial'), filiais) }}
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="loja" class="form-label">Loja</label>
+                    <input type="text" class="form-control" id="loja" name="loja" value="{{ dados.get('loja', '') }}">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="localidade" class="form-label">Localidade</label>
+                    <input type="text" class="form-control" id="localidade" name="localidade" value="{{ dados.get('localidade', '') }}">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="nome" name="nome" value="{{ dados.get('nome', '') }}" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="ip" class="form-label">IP</label>
+                    <input type="text" class="form-control" id="ip" name="ip" value="{{ dados.get('ip', '') }}">
+                </div>
+                 <div class="col-md-4 mb-3">
+                    <label for="portas" class="form-label">Portas</label>
+                    <input type="text" class="form-control" id="portas" name="portas" value="{{ dados.get('portas', '') }}">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="acesso_web" class="form-label">Acesso Via Web (Link)</label>
+                <input type="text" class="form-control" id="acesso_web" name="acesso_web" value="{{ dados.get('acesso_web', '') }}">
+            </div>
+            <div class="mb-3">
+                <label for="descricao" class="form-label">Descrição</label>
+                <textarea class="form-control" name="descricao" id="descricao" rows="2">{{ dados.get('descricao', '') }}</textarea>
+            </div>
+             <div class="mb-3">
+                <label for="observacao" class="form-label">Observação</label>
+                <textarea class="form-control" name="observacao" id="observacao" rows="2">{{ dados.get('observacao', '') }}</textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="{{ url_for('cameras.listar') }}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

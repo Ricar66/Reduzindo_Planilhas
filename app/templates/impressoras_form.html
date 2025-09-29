@@ -1,0 +1,20 @@
+{% extends 'base.html' %}{% block conteudo %}
+<h1 class="mb-3">{{ 'Editar' if dados.id else 'Nova' }} Impressora</h1>
+<form method="post" action="{{ url_for('impressoras.atualizar', id=dados.id) if dados.id else url_for('impressoras.criar') }}" class="card card-body">
+  <div class="row g-2">
+    <div class="col-md-3"><label class="form-label">Filial</label>{% from 'macros.html' import select_filiais %}{{ select_filiais('filial', dados.filial) }}</div>
+    <div class="col-md-3"><label class="form-label">Porta IP</label><input name="porta_ip" value="{{ dados.porta_ip or '' }}" class="form-control form-control-sm"></div>
+    <div class="col-md-3"><label class="form-label">Impressora</label><input name="impressora" value="{{ dados.impressora or '' }}" class="form-control form-control-sm"></div>
+    <div class="col-md-3"><label class="form-label">Modelo</label><input name="modelo" value="{{ dados.modelo or '' }}" class="form-control form-control-sm"></div>
+    <div class="col-md-3"><label class="form-label">Serial</label><input name="serial" value="{{ dados.serial or '' }}" class="form-control form-control-sm"></div>
+    <div class="col-md-3"><label class="form-label">Login</label><input name="login" value="{{ dados.login or '' }}" class="form-control form-control-sm"></div>
+    <div class="col-md-3"><label class="form-label">Senha</label><input name="senha" value="{{ dados.senha or '' }}" class="form-control form-control-sm"></div>
+    <div class="col-md-3"><label class="form-label">Scanner</label><input name="scanner" value="{{ dados.scanner or '' }}" class="form-control form-control-sm"></div>
+    <div class="col-md-3"><label class="form-label">NF</label><input name="nf" value="{{ dados.nf or '' }}" class="form-control form-control-sm"></div>
+    <div class="col-md-3"><label class="form-label">Depto</label><input name="departamento" value="{{ dados.departamento or '' }}" class="form-control form-control-sm"></div>
+    <div class="col-md-3"><label class="form-label">Responsável</label><input name="responsavel" value="{{ dados.responsavel or '' }}" class="form-control form-control-sm"></div>
+    <div class="col-md-3"><label class="form-label">Mod. Toner</label><input name="mod_toner" value="{{ dados.mod_toner or '' }}" class="form-control form-control-sm"></div>
+  </div>
+  <button class="btn btn-success mt-3">Salvar</button>
+</form>
+{% endblock %}

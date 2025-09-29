@@ -1,0 +1,177 @@
+:root{
+  /* Paleta da marca */
+  --brand:#1B5E20;       /* verde escuro John Deere */
+  --brand-2:#2E7D32;     /* verde médio */
+  --brand-light:#E6F7EA; /* verde claro para hover e cartões */
+  --highlight:#F9FF6A;   /* amarelo Tracbel */
+  --bg:#f5f7f5;           /* fundo geral */
+  --text-dark:#0f172a;
+  --text-muted:#334155;
+}
+
+/* Fundo geral */
+body{
+  background:var(--bg);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Barra superior com gradiente */
+.brand-bar{
+  background: linear-gradient(90deg, var(--brand) 0%, var(--brand-2) 100%);
+  box-shadow: 0 2px 12px rgba(0,0,0,.15);
+  height:70px;
+}
+
+/* Layout com sidebar fixa (não encolhe) + conteúdo fluido */
+.layout{
+  display:flex;
+  align-items:flex-start;
+  gap:3px;
+}
+
+/* Sidebar: largura fixa, sticky abaixo da navbar */
+#menu{
+  flex:0 0 270px;
+  max-width:270px;
+  min-width:270px;
+  background:#fff;
+  padding:1rem;
+  position:sticky;
+  top:70px; /* respeita altura da navbar */
+  height: calc(100vh - 70px);
+  overflow-y:auto;
+  border-right:1px solid rgba(0,0,0,.05);
+  border-radius:0 12px 12px 0;
+  z-index:5;
+}
+
+/* Área de conteúdo */
+#conteudo{
+  flex:1;
+  min-width:0;        
+  min-height: calc(100vh - 70px);
+  padding:2rem;
+}
+
+/* Botões do menu lateral (estilo cartão) */
+.btn-menu{
+  background:#fff;
+  border:1px solid #e6ebea;
+  text-align:left;
+  color:var(--text-dark);
+  padding:.8rem 1rem;
+  border-radius:12px;
+  font-weight:500;
+  transition:transform .15s, box-shadow .15s, border-color .15s, background .15s;
+  display:flex;
+  align-items:center;
+}
+.btn-menu i{
+  font-size:1.1rem;
+}
+.btn-menu:hover{
+  transform:translateY(-1px);
+  box-shadow:0 4px 10px rgba(0,0,0,.05);
+  background: var(--brand-light);
+}
+.btn-menu.active{
+  border-color:transparent;
+  background: linear-gradient(90deg, var(--brand-light) 0%, #f4fff6 100%);
+}
+
+/* Cartões e tabelas */
+.card{
+  border:0;
+  border-radius:16px;
+  box-shadow:0 6px 20px rgba(0,0,0,.06);
+  padding:1rem;
+  background:#fff;
+}
+
+/* Tabelas mais espaçosas */
+.table{
+  width:100%;
+  border-collapse: separate;
+  border-spacing:0 8px;
+  background:#fff;
+  border-radius:12px;
+  overflow:hidden;
+}
+.table thead th{
+  font-weight:600;
+  color:var(--text-muted);
+  background: var(--brand-light);
+  padding:12px 15px;
+  border-bottom:none;
+}
+.table tbody td{
+  padding:12px 15px;
+  background:#fff;
+}
+.table-striped > tbody > tr:nth-of-type(odd) > *{
+  background-color: rgba(16,185,129,.04);
+}
+.table tbody tr:hover td{
+  background: rgba(249,255,106,.2); /* destaque amarelo suave */
+}
+
+/* Grid do dashboard */
+.dashboard-grid{
+  display:grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap:20px;
+}
+.dg-4{ grid-column: span 4; }
+.dg-6{ grid-column: span 6; }
+.dg-12{ grid-column: span 12; }
+
+/* Regras responsivas */
+@media (max-width:1200px){
+  .dg-4{ grid-column: span 6; }
+  .dg-6{ grid-column: span 12; }
+}
+@media (max-width:768px){
+  #menu{ display:none; } 
+  .dg-4, .dg-6, .dg-12{ grid-column: span 12; }
+}
+
+/* Tela de login */
+.login-bg{
+  min-height:100vh;
+  background-image: url("/static/assets/img/image_login.jpg");
+  background-position: center center, center center;
+  background-repeat: no-repeat, no-repeat;
+  background-size: cover, cover;
+  background-attachment: fixed, fixed;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+.login-bg::before{
+  content: "";
+  position: absolute;
+  top: 0; left:0; right:0; bottom:0;
+  background-color: rgba(0,0,0,.3);
+  z-index:-1;
+}
+.login-card{
+  max-width:400px;
+  width:100%;
+  padding:2rem;
+  border-radius:16px;
+  background:#fff;
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+
+/* Scrollbars customizadas (opcional) */
+#menu::-webkit-scrollbar{
+  width:6px;
+}
+#menu::-webkit-scrollbar-thumb{
+  background: var(--brand);
+  border-radius:3px;
+}
+#menu::-webkit-scrollbar-track{
+  background:#f1f1f1;
+}

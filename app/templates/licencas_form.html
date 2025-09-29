@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% set is_edit = dados.id %}
+{% set form_title = 'Editar Licença' if is_edit else 'Nova Licença' %}
+{% set titulo=form_title %}
+
+{% block conteudo %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">{{ form_title }}</h6>
+    </div>
+    <div class="card-body">
+        <form method="post" action="{{ url_for('licencas.atualizar', id=dados.id) if is_edit else url_for('licencas.criar') }}">
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="nome" name="nome" value="{{ dados.get('nome', '') }}">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ dados.get('email', '') }}">
+                </div>
+                 <div class="col-md-2 mb-3">
+                    <label for="matricula" class="form-label">Matrícula</label>
+                    <input type="text" class="form-control" id="matricula" name="matricula" value="{{ dados.get('matricula', '') }}">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4"><label class="form-label">Filial</label>{% from 'macros.html' import select_filiais %}{{ select_filiais('filial', dados.filial) }}</div>
+                <div class="col-md-4 mb-3">
+                    <label for="cargo" class="form-label">Cargo</label>
+                    <input type="text" class="form-control" id="cargo" name="cargo" value="{{ dados.get('cargo', '') }}">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="departamento" class="form-label">Departamento</label>
+                    <input type="text" class="form-control" id="departamento" name="departamento" value="{{ dados.get('departamento', '') }}">
+                </div>
+            </div>
+
+            <hr class="my-3">
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+    <label for="licenca" class="form-label">Licença</label>
+    {# Importa a nova macro do arquivo macros.html #}
+    {% from 'macros.html' import select_licencas %}
+
+    {# Chama a macro para gerar o HTML do select #}
+    {{ select_licencas('licenca', dados.get('licenca'), lista_licencas) }}
+</div>
+                <div class="col-md-2 mb-3">
+                    <label for="qtde" class="form-label">Quantidade</label>
+                    <input type="number" class="form-control" id="qtde" name="qtde" value="{{ dados.get('qtde', '1') }}">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="empresa" class="form-label">Empresa</label>
+                    <input type="text" class="form-control" id="empresa" name="empresa" value="{{ dados.get('empresa', '') }}">
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="{{ url_for('licencas.listar') }}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% set titulo = 'Licenças Ativas' %}
+
+{% block conteudo %}
+<h1 class="mb-3">Controle de Licenças</h1>
+
+<ul class="nav nav-tabs mb-3">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="{{ url_for('licencas.listar') }}">Licenças Ativas</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('licencas.inativos') }}">Inativos</a>
+  </li>
+</ul>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div class="d-flex gap-2">
+    <a class="btn btn-outline-success btn-sm" href="{{ url_for('licencas.importar_form') }}">Importar Excel/CSV</a>
+    <a class="btn btn-primary btn-sm" href="{{ url_for('licencas.exportar') }}">Exportar Ativos</a>
+  </div>
+  <a class="btn btn-success btn-sm" href="{{ url_for('licencas.novo') }}">Nova Licença</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover" style="white-space: nowrap;">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Matrícula</th>
+                <th>Nome</th>
+                <th>Filial</th>
+                <th>Cargo</th>
+                <th>Licença</th>
+                <th>Qtde</th>
+                <th>Departamento</th>
+                <th>Empresa</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in registros %}
+            <tr>
+                <td>{{ r.email }}</td>
+                <td>{{ r.matricula }}</td>
+                <td>{{ r.nome }}</td>
+                <td>{{ r.filial }}</td>
+                <td>{{ r.cargo }}</td>
+                <td>{{ r.licenca }}</td>
+                <td>{{ r.qtde }}</td>
+                <td>{{ r.departamento }}</td>
+                <td>{{ r.empresa }}</td>
+                <td>
+                    <a href="{{ url_for('licencas.editar', id=r.id) }}" class="btn btn-sm btn-outline-primary">Editar</a>
+                    <form method="POST" action="{{ url_for('licencas.desativar', id=r.id) }}" class="d-inline" onsubmit="return confirm('Desativar este registro?')">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Desativar</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="10" class="text-center">Nenhum registro ativo encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

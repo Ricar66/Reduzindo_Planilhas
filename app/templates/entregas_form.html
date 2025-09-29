@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% set titulo = 'Registrar Nova Entrega' %}
+
+{% block conteudo %}
+<h1 class="mb-3">Registrar Nova Entrega</h1>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Dados da Entrega</h6>
+    </div>
+    <div class="card-body">
+        <form method="post" action="{{ url_for('perifericos.criar_entrega') }}">
+            <div class="row">
+                <div class="col-md-8 mb-3">
+                    <label for="produto_id" class="form-label">Produto (Apenas itens com estoque aparecem)</label>
+                    <select class="form-control" id="produto_id" name="produto_id" required>
+                        <option value="">Selecione um produto...</option>
+                        {% for item in itens_disponiveis %}
+                            <option value="{{ item.id }}">
+                                {{ item.produto }} (Disponível: {{ item.qtd_estoque }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="qtd" class="form-label">Quantidade a Entregar</label>
+                    <input type="number" class="form-control" id="qtd" name="qtd" value="1" min="1" required>
+                </div>
+            </div>
+
+            <div class="row">
+                 <div class="col-md-8 mb-3">
+                    <label for="solicitante" class="form-label">Solicitante</label>
+                    <input type="text" class="form-control" id="solicitante" name="solicitante" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="glpi" class="form-label">GLPI (Chamado)</label>
+                    <input type="text" class="form-control" id="glpi" name="glpi">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="observacao" class="form-label">Observação</label>
+                <textarea class="form-control" name="observacao" id="observacao" rows="3"></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Registrar Entrega e Deduzir Estoque</button>
+            <a href="{{ url_for('perifericos.listar_entregas') }}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

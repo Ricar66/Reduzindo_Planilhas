@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% set titulo = 'Licenças Inativas' %}
+{% block conteudo %}
+<h1 class="mb-3">Licenças Inativas</h1>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <a class="btn btn-success btn-sm" href="{{ url_for('licencas.listar') }}">Voltar para Ativos</a>
+</div>
+
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-sm align-middle table-striped mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>E-mail</th><th>Nome</th><th>Filial</th><th>Licença</th><th>Departamento</th><th>Empresa</th><th class="text-end">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in registros %}
+        <tr>
+          <td>{{ r.email }}</td><td>{{ r.nome }}</td><td>{{ r.filial }}</td><td>{{ r.licenca }}</td><td>{{ r.departamento }}</td><td>{{ r.empresa }}</td>
+          <td class="text-end">
+            <form method="post" action="{{ url_for('licencas.reativar', id=r.id) }}" class="d-inline" onsubmit="return confirm('Reativar colaborador?')">
+              <button class="btn btn-sm btn-outline-success">Reativar</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

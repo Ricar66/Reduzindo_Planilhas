@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% set is_edit = dados.id %}
+{% set form_title = 'Editar Férias' if is_edit else 'Registrar Novas Férias' %}
+{% set titulo = form_title %}
+
+{% block conteudo %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">{{ form_title }}</h6>
+    </div>
+    <div class="card-body">
+        <form method="POST" action="{{ url_for('ferias.atualizar', id=dados.id) if is_edit else url_for('ferias.criar') }}">
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="nome" class="form-label">Nome Completo</label>
+                    <input type="text" class="form-control" id="nome" name="nome" value="{{ dados.get('nome', '') }}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="departamento_filial" class="form-label">Departamento e Filial</label>
+                    <input type="text" class="form-control" id="departamento_filial" name="departamento_filial" value="{{ dados.get('departamento_filial', '') }}">
+                    </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="data_saida" class="form-label">Data de Saída</label>
+                    <input type="date" class="form-control" id="data_saida" name="data_saida" value="{{ dados.get('data_saida', '') }}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="data_retorno" class="form-label">Data de Retorno</label>
+                    <input type="date" class="form-control" id="data_retorno" name="data_retorno" value="{{ dados.get('data_retorno', '') }}">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Sistemas para Bloquear (Marque "Sim" se necessário)</label>
+                <div>
+                    {% set apps = ['AD', 'Email', 'TOTVS', 'CRM', 'John Deere'] %}
+                    {% for app in apps %}
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="{{ app|lower|replace(' ', '_') }}" value="Sim" id="{{ app|replace(' ', '_') }}" {% if dados.get(app|lower|replace(' ', '_')) %}checked{% endif %}>
+                        <label class="form-check-label" for="{{ app|replace(' ', '_') }}">{{ app }}</label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="atendente" class="form-label">Atendente</label>
+                <input type="text" class="form-control" id="atendente" name="atendente" value="{{ dados.get('atendente', '') }}" required>
+            </div>
+
+            <hr>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="{{ url_for('ferias.listar_ferias') }}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

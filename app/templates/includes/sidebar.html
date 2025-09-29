@@ -1,0 +1,35 @@
+<div class="px-3">
+  <h6 class="text-uppercase text-muted fw-bold mb-3">Gestão de TI</h6>
+  <div class="d-grid gap-2">
+    <a class="btn btn-menu" href="{{ url_dashboard() }}">
+      <i class="bi bi-grid-1x2 me-2"></i>
+      <span>Painel</span>
+    </a>
+    <a class="btn btn-menu" href="{{ url_for('vpn.listar') }}">
+      <i class="bi bi-shield-check me-2"></i>
+      <span>Liberação de VPN</span>
+    </a>
+    <a class="btn btn-menu" href="{{ url_for('licencas.listar') }}">
+      <i class="bi bi-key me-2"></i>
+      <span>Licenças</span>
+    </a>
+    <a class="btn btn-menu" href="{{ url_for('equipamentos.listar') }}">
+      <i class="bi bi-pc-display me-2"></i>
+      <span>Colaborador × Máquina</span>
+    </a>
+    <a class="btn btn-menu" href="{{ url_for('cameras.listar') }}">
+      <i class="bi bi-camera-video me-2"></i>
+      <span>Câmeras</span>
+    </a>
+    <a class="btn btn-menu" href="{{ url_for('impressoras.listar') }}">
+      <i class="bi bi-printer me-2"></i>
+      <span>Impressoras</span>
+    </a>
+    <a class="btn btn-menu" href="{{ url_for('perifericos.listar_estoque') }}">
+        <i class="bi bi-keyboard me-2"></i>
+        <span>Controle de Periféricos</span>
+    </a>
+</li>
+  </div>
+  
+</div>

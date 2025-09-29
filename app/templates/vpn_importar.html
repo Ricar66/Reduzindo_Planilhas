@@ -1,0 +1,7 @@
+{% extends 'base.html' %}{% block conteudo %}
+<h1 class="mb-3">Importar VPN (CSV/XLSX)</h1>
+<form method="post" enctype="multipart/form-data" class="card card-body">
+  <input type="file" name="arquivo" class="form-control">
+  <button class="btn btn-success mt-3">Importar</button>
+</form>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% set is_edit = dados.id %}
+{% set form_title = 'Editar Item de Estoque' if is_edit else 'Novo Item de Estoque' %}
+{% set titulo=form_title %}
+
+{% block conteudo %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">{{ form_title }}</h6>
+    </div>
+    <div class="card-body">
+        <form method="post" action="{{ url_for('perifericos.atualizar_item_estoque', id=dados.id) if is_edit else url_for('perifericos.criar_item_estoque') }}">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="produto">Produto</label>
+                    <input type="text" class="form-control" id="produto" name="produto" value="{{ dados.get('produto', '') }}" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="qtd_estoque">Quantidade em Estoque</label>
+                    <input type="number" class="form-control" id="qtd_estoque" name="qtd_estoque" value="{{ dados.get('qtd_estoque', '') }}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="cod_totvs">Código TOTVS</label>
+                    <input type="text" class="form-control" id="cod_totvs" name="cod_totvs" value="{{ dados.get('cod_totvs', '') }}">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="onde_comprar">Onde Comprar</label>
+                    <input type="text" class="form-control" id="onde_comprar" name="onde_comprar" value="{{ dados.get('onde_comprar', '') }}">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="{{ url_for('perifericos.listar_estoque') }}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

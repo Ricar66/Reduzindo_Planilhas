@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% set titulo = 'Férias' %}
+
+{% block conteudo %}
+<h1 class="mb-3">Registros de Férias</h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div class="d-flex gap-2">
+    <a class="btn btn-outline-success btn-sm" href="{{ url_for('ferias.importar_form') }}">Importar Excel/CSV</a>
+    <a class="btn btn-primary btn-sm" href="{{ url_for('ferias.exportar_ferias') }}">Exportar Excel/CSV</a>
+  </div>
+  <a class="btn btn-success btn-sm" href="{{ url_for('ferias.novo') }}">Novo</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Departamento e Filial</th> <th>Data de Saída</th>
+            <th>Data de Retorno</th>
+            <th>Atendente</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in registros %}
+        <tr>
+            <td>{{ r.nome }}</td>
+            <td>{{ r.departamento_filial }}</td> <td>{{ r.data_saida }}</td>
+            <td>{{ r.data_retorno if r.data_retorno else '-' }}</td>
+            <td>{{ r.atendente }}</td>
+            <td>
+                <a href="{{ url_for('ferias.editar', id=r.id) }}" class="btn btn-sm btn-outline-primary">Editar</a>
+                <form method="POST" action="{{ url_for('ferias.excluir', id=r.id) }}" class="d-inline" onsubmit="return confirm('Excluir este registro?')">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

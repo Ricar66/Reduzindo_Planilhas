@@ -1,0 +1,86 @@
+[
+  {
+    "produto": "CABO HDMI",
+    "qtd_estoque": "6",
+    "cod_totvs": "",
+    "onde_comprar": "COMPUWEST",
+    "id": "a4295821-cff9-44cc-8848-c879c2934bc1"
+  },
+  {
+    "produto": "CABO VGA",
+    "qtd_estoque": "4",
+    "cod_totvs": "CONSU3651",
+    "onde_comprar": "COMPUWEST",
+    "id": "58d2dda5-4307-4abd-ab82-d4657bdbcc41"
+  },
+  {
+    "produto": "CONVERSOR HDMI X VGA",
+    "qtd_estoque": "5",
+    "cod_totvs": "CONSU2077",
+    "onde_comprar": "COMPUWEST",
+    "id": "a8562aaa-74bf-491e-b4d8-cb988508a488"
+  },
+  {
+    "produto": "ESPUMA HEADSET",
+    "qtd_estoque": "2",
+    "cod_totvs": "CONSU2642",
+    "onde_comprar": "COMPRAS",
+    "id": "1b815eaa-dd1c-4db4-a8bb-96cb484b0add"
+  },
+  {
+    "produto": "HEADSET",
+    "qtd_estoque": "0",
+    "cod_totvs": "CONSU3296",
+    "onde_comprar": "COMPRAS",
+    "id": "036e17d0-612a-4dbc-80f7-02a94faa8887"
+  },
+  {
+    "produto": "KIT TECLADO E MOUSE",
+    "qtd_estoque": "5",
+    "cod_totvs": "CONSU1168",
+    "onde_comprar": "COMPRAS",
+    "id": "c1b4b521-9beb-4d5c-9019-f92c73220f6f"
+  },
+  {
+    "produto": "PENDRIVE 32GB",
+    "qtd_estoque": "7",
+    "cod_totvs": "CONSU2226",
+    "onde_comprar": "COMPUWEST",
+    "id": "c4cc7342-b49a-4207-809e-abc183299bb7"
+  },
+  {
+    "produto": "PENDRIVE 64GB",
+    "qtd_estoque": "6",
+    "cod_totvs": "CONSU1035",
+    "onde_comprar": "COMPUWEST",
+    "id": "6eafeffe-1fda-4df3-bdff-876ea0123647"
+  },
+  {
+    "produto": "SSD 1T",
+    "qtd_estoque": "5",
+    "cod_totvs": "CONSU5161",
+    "onde_comprar": "COMPUWEST",
+    "id": "28a1600f-8dfb-4c25-89c4-bc43562924ab"
+  },
+  {
+    "produto": "SSD 240GB",
+    "qtd_estoque": "9",
+    "cod_totvs": "CONSU0866",
+    "onde_comprar": "COMPUWEST",
+    "id": "9a60050c-2bdc-45c3-aa4b-03134fb82545"
+  },
+  {
+    "produto": "SSD 500GB",
+    "qtd_estoque": "6",
+    "cod_totvs": "CONSU5035",
+    "onde_comprar": "COMPUWEST",
+    "id": "8fddf30d-3426-41b8-89f0-9b14852ff7f1"
+  },
+  {
+    "produto": "SUPORTE NOTEBOOK",
+    "qtd_estoque": "0",
+    "cod_totvs": "CONSU0483",
+    "onde_comprar": "ICON",
+    "id": "1a66b3e5-0120-4998-bab5-579a3211aca7"
+  }
+]

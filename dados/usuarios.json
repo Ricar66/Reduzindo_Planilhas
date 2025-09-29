@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1",
+    "login": "admin",
+    "senha": "admin123",
+    "nome": "Administrador TI",
+    "papel": "ti"
+  },
+  {
+    "id": "2",
+    "login": "leitor",
+    "senha": "leitor123",
+    "nome": "Leitor",
+    "papel": "leitura"
+  }
+]

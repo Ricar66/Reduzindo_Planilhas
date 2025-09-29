@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+{% set titulo = 'Painel' %}
+
+{% block conteudo %}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Painel de Controle</h1>
+</div>
+
+<div class="row">
+
+    <div class="col-xl-8 col-lg-7">
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Top 5 Licenças em Uso</h6>
+            </div>
+            <div class="card-body">
+                <div class="chart-pie pt-4" style="height: 320px;">
+                    <canvas id="licencasChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Equipamentos por Filial</h6>
+            </div>
+            <div class="card-body">
+                <div class="chart-bar" style="height: 320px;">
+                    <canvas id="equipamentosChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Últimas Entregas de Periféricos</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>GLPI</th>
+                                <th>Solicitante</th>
+                                <th>Equipamento</th>
+                                <th class="text-center">Qtd</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entrega in kpis.ultimas_entregas %}
+                            <tr>
+                                <td>{{ entrega.get('glpi', '-') }}</td>
+                                <td>{{ entrega.get('solicitante', 'N/A') }}</td>
+                                <td>{{ entrega.get('produto_nome', 'N/A') }}</td>
+                                <td class="text-center">{{ entrega.get('qtd', '0') }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center text-muted">Nenhuma entrega recente.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <a href="{{ url_for('perifericos.listar_entregas') }}">Ver todas as entregas &rarr;</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-lg-5">
+
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Periféricos em Estoque</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ kpis.total_perifericos_estoque or 0 }}</div>
+                            </div>
+                            <div class="col-auto"><i class="fas fa-boxes fa-2x text-gray-300"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Itens com Estoque Baixo</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ kpis.itens_estoque_baixo or 0 }}</div>
+                            </div>
+                            <div class="col-auto"><i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">VPN Pendentes</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ kpis.vpn_pendentes or 0 }}</div>
+                            </div>
+                            <div class="col-auto"><i class="fas fa-network-wired fa-2x text-gray-300"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6 mb-4">
+                <div class="card border-left-secondary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Inativos (Licenças)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ kpis.lic_inativos or 0 }}</div>
+                            </div>
+                            <div class="col-auto"><i class="fas fa-user-slash fa-2x text-gray-300"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Módulos do Sistema</h6>
+            </div>
+            <div class="card-body">
+                <a href="{{ url_for('licencas.listar') }}" class="btn btn-light btn-icon-split mb-2 d-block">
+                    <span class="icon text-gray-600"><i class="fas fa-id-card"></i></span>
+                    <span class="text">Licenças ({{ kpis.total_licencas or 0 }})</span>
+                </a>
+                <a href="{{ url_for('equipamentos.listar') }}" class="btn btn-light btn-icon-split mb-2 d-block">
+                    <span class="icon text-gray-600"><i class="fas fa-laptop"></i></span>
+                    <span class="text">Equipamentos ({{ kpis.total_equipamentos or 0 }})</span>
+                </a>
+                <a href="{{ url_for('perifericos.listar_estoque') }}" class="btn btn-light btn-icon-split mb-2 d-block">
+                    <span class="icon text-gray-600"><i class="fas fa-keyboard"></i></span>
+                    <span class="text">Periféricos</span>
+                </a>
+                <a href="{{ url_for('impressoras.listar') }}" class="btn btn-light btn-icon-split mb-2 d-block">
+                    <span class="icon text-gray-600"><i class="fas fa-print"></i></span>
+                    <span class="text">Impressoras</span>
+                </a>
+                <a href="{{ url_for('cameras.listar') }}" class="btn btn-light btn-icon-split mb-2 d-block">
+                    <span class="icon text-gray-600"><i class="fas fa-video"></i></span>
+                    <span class="text">Câmeras</span>
+                </a>
+                <a href="{{ url_for('ferias.listar_ferias') }}" class="btn btn-light btn-icon-split d-block">
+                    <span class="icon text-gray-600"><i class="fas fa-plane-departure"></i></span>
+                    <span class="text">Férias</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    
+    // --- Gráfico de Licenças (Doughnut) ---
+    const ctxLicencas = document.getElementById("licencasChart");
+    if (ctxLicencas) {
+        new Chart(ctxLicencas, {
+            type: 'doughnut',
+            data: {
+                // CORREÇÃO AQUI: Usando Jinja2 para injetar os dados do Python
+                labels: {{ kpis.licencas_chart_data.labels|tojson|safe }},
+                datasets: [{
+                    // CORREÇÃO AQUI: Usando Jinja2 para injetar os dados do Python
+                    data: {{ kpis.licencas_chart_data.data|tojson|safe }},
+                    backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b'],
+                    hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#dda20a', '#c73123'],
+                    hoverBorderColor: "rgba(234, 236, 244, 1)",
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        backgroundColor: "rgb(255,255,255)",
+                        bodyColor: "#858796",
+                        borderColor: '#dddfeb',
+                        borderWidth: 1,
+                        padding: 15,
+                        displayColors: false,
+                    }
+                },
+                cutout: '80%',
+            },
+        });
+    }
+
+    // --- Gráfico de Equipamentos (Bar) ---
+    const ctxEquip = document.getElementById("equipamentosChart");
+    if (ctxEquip) {
+        new Chart(ctxEquip, {
+            type: 'bar',
+            data: {
+                // CORREÇÃO AQUI: Usando Jinja2 para injetar os dados do Python
+                labels: {{ kpis.equip_chart_data.labels|tojson|safe }},
+                datasets: [{
+                    label: "Quantidade",
+                    backgroundColor: "#4e73df",
+                    hoverBackgroundColor: "#2e59d9",
+                    borderColor: "#4e73df",
+                    // CORREÇÃO AQUI: Usando Jinja2 para injetar os dados do Python
+                    data: {{ kpis.equip_chart_data.data|tojson|safe }},
+                    maxBarThickness: 25,
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false, drawBorder: false },
+                        ticks: { maxTicksLimit: 10 }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            maxTicksLimit: 5,
+                            padding: 10,
+                            // Garante que os ticks sejam números inteiros
+                            callback: function(value) {if (Math.floor(value) === value) {return value;}}
+                        }
+                    }
+                },
+            }
+        });
+    }
+});
+</script>
+{% endblock %}
